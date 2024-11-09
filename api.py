@@ -1,11 +1,15 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from flask_caching import Cache
 import pandas as pd
 import tensorflow as tf
 import logging
 
 app = Flask(__name__)
 CORS(app)
+
+#caching
+cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 
 # Load the model
 model = tf.keras.models.load_model('./model_final.h5')
@@ -22,15 +26,15 @@ def validate_input(data):
     for field in required_fields:
         if field not in data or not isinstance(data[field], (int, float)):
             raise ValueError(f"Invalid or missing value for {field}")
-        if data[field] < 0 or data[field] > 1000:
+        if data[field] < 0 or data[field] > 1000: 
             raise ValueError(f"{field} value out of bounds")
     return True
 
-# Prediction endpoint
+#caching
+@cache.memoize(60)
 @app.route("/predict", methods=['POST'])
 def predict():
     try:
-        # Parse input JSON
         data = request.get_json()
         print("Received data:", data)
 
