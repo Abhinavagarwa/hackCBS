@@ -1,5 +1,4 @@
 # mlproject
-hi 
 <br>
 >modeltrain.py : https://colab.research.google.com/drive/1m3n27F-t9f6rI4kzoPoX4sXePh67OQeS?usp=sharing<br>
 >in this we have dropped three parameters and achieved a accuracy of 95%+ and also we have a flask api to call or compile the model and give us the output regarding the our input values this can be done by simple curl command and by postman also just run <br>
